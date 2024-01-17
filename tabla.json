@@ -1,0 +1,26 @@
+[
+	{
+		"codigo": 1,
+		"nombre": "Eduardo",
+		"edad":45,
+		"club":true
+	},
+	{
+		"codigo": 2,
+		"nombre": "Manuel",
+		"edad":8,
+		"club":true
+	},
+	{
+		"codigo": 3,
+		"nombre": "Laura",
+		"edad":38,
+		"club":true
+	},
+	{
+		"codigo": 4,
+		"nombre": "Jacinto",
+		"edad":58,
+		"club":true
+	}
+]

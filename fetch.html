@@ -1,0 +1,97 @@
+<!--EJERCUTAR DENTRO DE UN SERVIDOR WEB, POR EJEMPLO XAAMP
+utilizar http://localhost/apifetch/fetch.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Fetch- Petición a ficheros de texto</title>
+</head>
+<body>
+    <button id= "mostrarTexto">Muestra el archivo de texto</button>
+    <div id="contenido"></div>
+
+    <button id="mostarTabla">Muestra el archivo de JSON en forma de tabla</button>
+    <table>
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Edad </th>
+                <th>Club </th>
+            </tr>
+        </thead>
+        <tbody id="tabla">
+
+        </tbody> 
+    </table>
+        
+        
+        <script>
+            document.getElementById("mostrarTexto").addEventListener("click", mostrarTexto);
+            let contenido = document.getElementById("contenido");
+            //otra opcion utilizando querySelector
+            //let contenido = docuemnto.querySelector("#contenido");
+
+            //fech trabaja con promesas, es decir, de forma asincrona  cuando lo reciba cada then puesto debaja del fetch
+            function mostrarTexto() {
+                fetch("texto.txt")
+                //cuando obtengamos los datos se trasforma este data en un texto
+                .then (data=>data.text())
+                
+                .then (data2=>{
+                    //muestre en consola 
+                    console.log(data2);
+                    //o lo podriamos mostar en el html con id contenido
+                    contenido.innerHTML = data2;
+                })
+            }
+
+            
+            document.getElementById("mostarTabla").addEventListener("click", mostarTabla)
+            //let tabla=document.getElementById("tabla");
+            let tabla=document.querySelector("#tabla");
+
+
+            function mostarTabla(){
+                fetch("tabla.json")
+                .then(data=> data.json())
+                .then (data2 => {
+                    console.table(data2);
+                    dibujarTabla(data2);
+                })
+                //cualquier error lo podria procesar aqui
+                .catch(error=>{
+                    console.error("ERROR: "+ error)
+                })
+                //ejecuta esta parte pase lo que pase
+                .finally ( () => {
+                    console.log("Ha terminado el programa");
+                })
+
+            }
+
+
+
+            function dibujarTabla(datos){
+                tabla.innerHTML='';
+                for (let valor of datos){
+                    //si es cierto escribe "Miembro del club y sino No es miermbro del club"
+                    tabla.innerHTML += ` 
+                        <tr>
+                            <th>${valor.codigo} </th>
+                            <td>${valor.nombre} </td>
+                            <td>${valor.edad} </td>
+                            
+                            <td>${valor.club ? "Miembro del Club": "No es miembro del club"} </td>
+                        </tr>
+                    `;   
+
+                }
+            }
+
+        </script>
+
+</body>
+</html>
